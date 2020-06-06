@@ -2,4 +2,4 @@ server:
   port: 8098
 method-tracker:
   enable: true
-  log-line-length: 130
+  log-line-length: 120
