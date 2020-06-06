@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -23,6 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 @Aspect
 @Component
+@ConditionalOnProperty(prefix = "method-tracker", name = "enable", havingValue = "true")
 public class MethodTrackerAop {
 
     private final Integer logLineLength;
