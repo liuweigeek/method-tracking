@@ -1,0 +1,11 @@
+### find all user
+GET http://localhost:8098/user
+Accept: application/json
+
+### find Scott with name
+GET http://localhost:8098/user/scott
+Accept: application/json
+
+### find Scott with name and age
+GET http://localhost:8098/user/scott/24
+Accept: application/json

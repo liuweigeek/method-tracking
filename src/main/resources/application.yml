@@ -1,0 +1,4 @@
+server:
+  port: 8098
+method-tracker:
+  log-line-length: 130
