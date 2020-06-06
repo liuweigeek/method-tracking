@@ -69,6 +69,7 @@ public class MethodTrackerAop {
         System.out.println();
         log.info(StringUtils.repeat("=", logLineLength));
         logList.get().forEach(log::info);
+        logList.get().clear();
         log.info(StringUtils.repeat("=", logLineLength) + "\n");
     }
 }
