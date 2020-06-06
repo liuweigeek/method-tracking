@@ -19,8 +19,8 @@ public class UserRepository {
 
     public Stream<User> findAll() {
         return Stream.of(new User(1L, "Scott", "", 24),
-                new User(1L, "Jeremy", "", 25),
-                new User(1L, "Alex", "", 23));
+                new User(2L, "Jeremy", "", 25),
+                new User(3L, "Alex", "", 23));
     }
 
     public Optional<User> findById(Long id) {
