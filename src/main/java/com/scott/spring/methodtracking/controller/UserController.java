@@ -4,7 +4,6 @@ import com.scott.spring.methodtracking.annotation.TimeTrack;
 import com.scott.spring.methodtracking.domain.User;
 import com.scott.spring.methodtracking.service.PasswordService;
 import com.scott.spring.methodtracking.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +24,8 @@ public class UserController {
     private final UserService userService;
     private final PasswordService passwordService;
 
-    public UserController(@Autowired UserService userService,
-                          @Autowired PasswordService passwordService) {
+    public UserController(UserService userService,
+                          PasswordService passwordService) {
         this.userService = userService;
         this.passwordService = passwordService;
     }

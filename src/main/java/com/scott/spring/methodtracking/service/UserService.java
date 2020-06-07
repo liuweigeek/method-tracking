@@ -3,7 +3,6 @@ package com.scott.spring.methodtracking.service;
 import com.scott.spring.methodtracking.annotation.TimeTrack;
 import com.scott.spring.methodtracking.domain.User;
 import com.scott.spring.methodtracking.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,8 +22,8 @@ public class UserService {
 
     private final PasswordService passwordService;
 
-    public UserService(@Autowired UserRepository userRepository,
-                       @Autowired PasswordService passwordService) {
+    public UserService(UserRepository userRepository,
+                       PasswordService passwordService) {
         this.userRepository = userRepository;
         this.passwordService = passwordService;
     }
