@@ -8,6 +8,7 @@
         <version>2.3.0.RELEASE</version>
         <relativePath/>
     </parent>
+
     <groupId>com.scott.spring</groupId>
     <artifactId>method-tracking</artifactId>
     <version>1.0</version>

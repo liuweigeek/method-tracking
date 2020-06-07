@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Author: scott
@@ -33,14 +32,14 @@ public class MethodTrackerAop {
         this.logLineLength = logLineLength;
     }
 
-    private final ThreadLocal<AtomicInteger> calledLevel = ThreadLocal.withInitial(AtomicInteger::new);
+    private final ThreadLocal<Integer> calledLevel = ThreadLocal.withInitial(() -> 0);
     private final ThreadLocal<List<String>> logList = ThreadLocal.withInitial(ArrayList::new);
 
     @Around("@within(com.scott.spring.methodtracking.annotation.TimeTrack) || @annotation(com.scott.spring.methodtracking.annotation.TimeTrack)")
     public Object timeTracker(ProceedingJoinPoint point) throws Throwable {
 
         long startTime = System.currentTimeMillis();
-        calledLevel.get().incrementAndGet();
+        calledLevel.set(calledLevel.get() + 1);
         int index = logList.get().size();
         logList.get().add(null);
         Method method = ((MethodSignature) point.getSignature()).getMethod();
@@ -48,18 +47,19 @@ public class MethodTrackerAop {
         try {
             return point.proceed();
         } finally {
-            logList.get().set(index, generateLog(method, parameters, startTime, System.currentTimeMillis(), calledLevel.get().get() - 1));
-            if (calledLevel.get().decrementAndGet() == 0) {
+            calledLevel.set(calledLevel.get() - 1);
+            logList.get().set(index, generateLog(method, parameters, startTime, System.currentTimeMillis(), calledLevel.get()));
+            if (calledLevel.get() == 0) {
                 printLog();
             }
         }
     }
 
-    private String generateLog(Method method, Object[] parameters, long startTime, long endTime, int callCount) {
-        String methodStr = callCount == 0 ?
+    private String generateLog(Method method, Object[] parameters, long startTime, long endTime, int callLevel) {
+        String methodStr = callLevel == 0 ?
                 String.format("| %s", method.getDeclaringClass().getName() + "." + method.getName() + "(" + StringUtils.join(parameters, ", ") + ")")
                 :
-                String.format("| %s\\- %s", StringUtils.repeat("  ", callCount),
+                String.format("| %s\\- %s", StringUtils.repeat("  ", callLevel),
                         method.getDeclaringClass().getName() + "." + method.getName() + "(" + StringUtils.join(parameters, ", ") + ")");
 
         return methodStr + StringUtils.leftPad("[" + (endTime - startTime) + "ms] ", logLineLength - 1 - methodStr.length()) + "|";
@@ -69,7 +69,7 @@ public class MethodTrackerAop {
         System.out.println();
         log.info(StringUtils.repeat("=", logLineLength));
         logList.get().forEach(log::info);
-        logList.get().clear();
         log.info(StringUtils.repeat("=", logLineLength) + "\n");
+        logList.get().clear();
     }
 }
