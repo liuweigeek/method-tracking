@@ -57,10 +57,10 @@ public class MethodTrackerAop {
 
     private String generateLog(Method method, Object[] parameters, long startTime, long endTime, int callLevel) {
         String methodStr = callLevel == 0 ?
-                String.format("| %s", method.getDeclaringClass().getName() + "." + method.getName() + "(" + StringUtils.join(parameters, ", ") + ")")
+                String.format("| %s", method.getDeclaringClass().getName() + "." + method.getName() + "(" + StringUtils.join(parameters, ", ") + ");")
                 :
                 String.format("| %s\\- %s", StringUtils.repeat("  ", callLevel),
-                        method.getDeclaringClass().getName() + "." + method.getName() + "(" + StringUtils.join(parameters, ", ") + ")");
+                        method.getDeclaringClass().getName() + "." + method.getName() + "(" + StringUtils.join(parameters, ", ") + ");");
 
         return methodStr + StringUtils.leftPad("[" + (endTime - startTime) + "ms] ", logLineLength - 1 - methodStr.length()) + "|";
     }
