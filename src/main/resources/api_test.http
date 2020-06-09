@@ -1,4 +1,4 @@
-### find all user
+### find all users
 GET http://localhost:8098/user
 Accept: application/json
 
