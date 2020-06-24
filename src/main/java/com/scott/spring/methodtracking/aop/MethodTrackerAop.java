@@ -5,7 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -36,13 +35,8 @@ public class MethodTrackerAop {
     private final ThreadLocal<Integer> calledLevel = ThreadLocal.withInitial(() -> 0);
     private final ThreadLocal<List<String>> logList = ThreadLocal.withInitial(ArrayList::new);
 
-    @Pointcut("execution(* com.scott.spring.methodtracking..*.*(..))")
-    public void pointCutR() {
-    }
-
-    /*@Around("@within(com.scott.spring.methodtracking.annotation.TimeTrack)" +
-            "|| @annotation(com.scott.spring.methodtracking.annotation.TimeTrack)")*/
-    @Around("pointCutR()")
+    //@Around("@within(com.scott.spring.methodtracking.annotation.TimeTrack) || @annotation(com.scott.spring.methodtracking.annotation.TimeTrack)")
+    @Around("execution(* com.scott.spring.methodtracking..*.*(..))")
     public Object timeTracker(ProceedingJoinPoint point) throws Throwable {
 
         long startTime = System.currentTimeMillis();
