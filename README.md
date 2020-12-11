@@ -1,5 +1,5 @@
 # method-tracking
-1. 添加@TimeTrack注解到要追踪的方法上
+1. 添加`@TimeTrack`注解到要追踪的方法上
     ![添加注解@TimeTrack到要追踪的方法上](./src/main/resources/images/annotation.png)
 2. 调用方法
     ![调用方法](./src/main/resources/images/execute.png)
